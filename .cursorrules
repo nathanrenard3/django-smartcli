@@ -1,0 +1,223 @@
+# Django SmartCLI - Cursor Rules
+
+## Project Overview
+
+Django SmartCLI is a Django command library inspired by modern CLIs like NestJS, AdonisJS, and Laravel. It automates the creation of Django microservices with a complete and consistent structure.
+
+## Project Architecture
+
+The project follows a modular architecture where each microservice (Django app) is organized in the `apps/` directory with a standardized structure:
+
+```
+apps/
+├── module_name/
+│   ├── factories/      # Test factories (factory_boy)
+│   ├── migrations/     # Django migrations
+│   ├── models/         # Django models
+│   ├── serializers/    # DRF serializers
+│   ├── services/       # Business logic
+│   ├── tests/          # Unit and integration tests
+│   │   ├── models/
+│   │   ├── serializers/
+│   │   ├── services/
+│   │   └── views/
+│   ├── views/          # Django/DRF views
+│   ├── apps.py         # App configuration
+│   ├── urls.py         # Module URLs
+│   └── __init__.py
+```
+
+## Available Commands
+
+### 1. `create_module` - Complete Microservice Creation
+
+```bash
+python manage.py create_module <module_name>
+```
+
+**Features:**
+
+- Creates a new module in `apps/`
+- Generates the complete folder structure
+- Automatically adds the module to `MY_APPS` in settings
+- Creates `__init__.py` files in all directories
+- Structures tests by category
+
+**Example:**
+
+```bash
+python manage.py create_module users
+```
+
+### 2. `create_model` - Django Model Creation
+
+```bash
+python manage.py create_model <model_name> <app_name>
+```
+
+**Features:**
+
+- Creates a model with standardized template
+- Generates a custom manager with useful methods
+- Automatically creates the corresponding factory
+- Generates model tests
+- Updates `__init__.py` files
+
+**Generated Template:**
+
+- UUID as primary key
+- Automatic timestamps (`created_at`, `deleted_at`)
+- Custom manager with `get_active()` and `get_by_id()` methods
+- Soft delete support
+
+**Example:**
+
+```bash
+python manage.py create_model UserProfile users
+```
+
+### 3. `create_serializer` - DRF Serializer Creation
+
+```bash
+python manage.py create_serializer <serializer_name> <app_name> [--model <model_name>]
+```
+
+**Features:**
+
+- Creates a ModelSerializer
+- Automatically detects the associated model
+- Generates serializer tests
+- Updates imports
+
+**Example:**
+
+```bash
+python manage.py create_serializer UserProfileSerializer users
+```
+
+### 4. `create_service` - Business Service Creation
+
+```bash
+python manage.py create_service <service_name> <app_name>
+```
+
+**Features:**
+
+- Creates a service class with static methods
+- Supports atomic transactions
+- Generates service tests
+- Template with automatic `create_*` method
+
+**Example:**
+
+```bash
+python manage.py create_service UserProfileService users
+```
+
+### 5. `create_factory` - Test Factory Creation
+
+```bash
+python manage.py create_factory <factory_name> <app_name>
+```
+
+**Features:**
+
+- Creates a factory_boy factory
+- Automatically detects the associated model
+- Template with automatic timestamps
+- Updates imports
+
+**Example:**
+
+```bash
+python manage.py create_factory UserProfileFactory users
+```
+
+## Naming Conventions
+
+### Models
+
+- **Format:** PascalCase (e.g., `UserProfile`)
+- **File:** snake_case (e.g., `user_profile.py`)
+- **Manager:** `<ModelName>Manager`
+
+### Serializers
+
+- **Format:** PascalCase + "Serializer" (e.g., `UserProfileSerializer`)
+- **File:** snake_case + "\_serializer" (e.g., `user_profile_serializer.py`)
+
+### Services
+
+- **Format:** PascalCase + "Service" (e.g., `UserProfileService`)
+- **File:** snake_case + "\_service" (e.g., `user_profile_service.py`)
+- **Methods:** snake_case (e.g., `create_user_profile`)
+
+### Factories
+
+- **Format:** PascalCase + "Factory" (e.g., `UserProfileFactory`)
+- **File:** snake_case + "\_factory" (e.g., `user_profile_factory.py`)
+
+## Test Structure
+
+Each module generates an organized test structure:
+
+```
+tests/
+├── models/          # Model tests
+├── serializers/     # Serializer tests
+├── services/        # Service tests
+└── views/           # View tests
+```
+
+## Settings Integration
+
+Commands automatically update the `core/settings/base.py` file:
+
+- Add module to `MY_APPS`
+- Automatic alphabetical sorting
+- Import management
+
+## Best Practices
+
+1. **First create the module** with `create_module`
+2. **Create models** with `create_model`
+3. **Create serializers** with `create_serializer`
+4. **Create services** with `create_service`
+5. **Factories are automatically created** with models
+
+## Typical Workflow
+
+```bash
+# 1. Create a new microservice
+python manage.py create_module products
+
+# 2. Create models
+python manage.py create_model Product products
+python manage.py create_model Category products
+
+# 3. Create serializers
+python manage.py create_serializer ProductS products
+python manage.py create_serializer Category products
+
+# 4. Create services
+python manage.py create_service Product products
+python manage.py create_service Category products
+```
+
+## Future Extensions
+
+The project is designed to be extensible with future commands:
+
+- `create_view` - DRF view creation
+- `create_migration` - Migration generation
+- `create_api` - Complete API endpoint creation
+
+## Support and Contribution
+
+The project follows Django conventions and uses best practices for:
+
+- Unit and integration tests
+- Automatic documentation
+- Error handling
+- Data validation
+- Modular architecture
