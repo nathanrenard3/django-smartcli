@@ -40,6 +40,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/nathanrenard3/django-smartcli",
+    license="MIT",
     project_urls={
         "Bug Reports": "https://github.com/nathanrenard3/django-smartcli/issues",
         "Source": "https://github.com/nathanrenard3/django-smartcli",
@@ -50,7 +51,6 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",

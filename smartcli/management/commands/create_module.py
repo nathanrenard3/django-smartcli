@@ -3,7 +3,7 @@ import re
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from smartcli.config import DIRECTORIES, TEST_SUBDIRECTORIES, FILE_TEMPLATES, SUCCESS_MESSAGES, WARNING_MESSAGES
+from smartcli.config import DIRECTORIES, TEST_SUBDIRECTORIES, FILE_TEMPLATES, SUCCESS_MESSAGES
 from smartcli.utils import (
     check_file_exists, ensure_directory_exists,
     write_file_content, detect_django_project_settings, find_installed_apps_in_settings,
