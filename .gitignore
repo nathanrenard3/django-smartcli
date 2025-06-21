@@ -277,5 +277,9 @@ static/
 ehthumbs.db
 Thumbs.db
 
+# Project specific
 test_project/
-django_smartcli.egg-info/ 
+django_smartcli.egg-info/
+
+# Cursor IDE
+.cursorrules 
