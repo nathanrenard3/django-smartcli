@@ -48,6 +48,8 @@ def main(args: Optional[List[str]] = None) -> int:
             return run_django_command("create_factory", args[1:])
         elif command == "create-views":
             return run_django_command("create_views", args[1:])
+        elif command == "test":
+            return run_django_command("test", args[1:])
         else:
             print(f"❌ Unknown command: {command}")
             print_help()

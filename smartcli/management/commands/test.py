@@ -8,13 +8,12 @@ from django.core.management.commands.test import Command as TestCommand
 class Command(TestCommand):
     """
     Custom command that extends Django's test command.
-    Allows filtering tests by type (models, services, serializers, utils, views).
+    Allows filtering tests by type (models, services, serializers, views).
 
     Usage:
         python manage.py test --models
         python manage.py test --services
         python manage.py test --serializers
-        python manage.py test --utils
         python manage.py test --views
     """
 
@@ -39,24 +38,9 @@ class Command(TestCommand):
             help='Run only tests in "serializers" directories',
         )
         parser.add_argument(
-            "--utils",
-            action="store_true",
-            help='Run only tests in "utils" directories',
-        )
-        parser.add_argument(
             "--views",
             action="store_true",
             help='Run only tests in "views" directories',
-        )
-        parser.add_argument(
-            "--security",
-            action="store_true",
-            help='Run only tests in "security" directories',
-        )
-        parser.add_argument(
-            "--commands",
-            action="store_true",
-            help='Run only tests in "commands" directories',
         )
 
     def handle(self, *test_labels, **options):
@@ -66,10 +50,7 @@ class Command(TestCommand):
             "models": options.get("models", False),
             "services": options.get("services", False),
             "serializers": options.get("serializers", False),
-            "utils": options.get("utils", False),
             "views": options.get("views", False),
-            "security": options.get("security", False),
-            "commands": options.get("commands", False),
         }
 
         # Check that only one filtering option is used

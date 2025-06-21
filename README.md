@@ -30,10 +30,11 @@ Django SmartCLI automates the creation of Django microservices with a complete a
 - Atomic transactions in services
 - Comprehensive test templates
 
-### 🎯 Dual Interface
+### 🚦 Modern CLI-first Workflow
 
-- **Django Management Commands**: Traditional `python manage.py` interface
-- **Direct CLI Commands**: Modern `django-smartcli` interface for faster workflow
+- **Direct CLI Commands**: Use `django-smartcli` for all operations (recommended)
+- **Django Compatibility**: You can also use `python manage.py` if you prefer
+- **Smart Naming**: The CLI automatically adds suffixes (e.g., `Product` becomes `ProductService`)
 
 ## 📦 Installation
 
@@ -53,191 +54,151 @@ INSTALLED_APPS = [
 ]
 ```
 
-### 2. Create your first microservice
-
-#### Option A: Using Django Management Commands (Traditional)
-
-```bash
-# Create a new module with complete structure
-python manage.py create_module users
-
-# Create models, serializers, services
-python manage.py create_model UserProfile users
-python manage.py create_serializer UserProfileSerializer users
-python manage.py create_service UserProfileService users
-```
-
-#### Option B: Using Direct CLI Commands (Modern)
+### 2. Create your first microservice (recommended method)
 
 ```bash
 # Create a new module with complete structure
 django-smartcli create-module users
 
-# Create models, serializers, services
+# Create models, serializers, services (smart naming)
 django-smartcli create-model UserProfile users
-django-smartcli create-serializer UserProfileSerializer users
-django-smartcli create-service UserProfileService users
+django-smartcli create-serializer UserProfile users  # → UserProfileSerializer
+django-smartcli create-service UserProfile users     # → UserProfileService
 ```
 
-## 🛠️ Available Commands
+### 3. (Optional) Alternative usage with manage.py
 
-### `create_module` / `create-module`
+If you prefer, all commands are also available via Django:
+
+```bash
+python manage.py create_module users
+python manage.py create_model UserProfile users
+python manage.py create_serializer UserProfileSerializer users
+python manage.py create_service UserProfileService users
+```
+
+## 🛠️ Available Commands (CLI recommended)
+
+### `create-module`
 
 Creates a complete Django app structure.
 
 ```bash
-# Django management command
-python manage.py create_module <module_name>
-
-# Direct CLI command
 django-smartcli create-module <module_name>
 ```
 
-**Features:**
-
-- Creates all necessary directories
-- Generates `apps.py` and `urls.py`
-- Automatically adds to `INSTALLED_APPS`
-- Creates `__init__.py` files in all directories
-
-### `create_model` / `create-model`
+### `create-model`
 
 Creates a Django model with best practices.
 
 ```bash
-# Django management command
-python manage.py create_model <model_name> <app_name>
-
-# Direct CLI command
 django-smartcli create-model <model_name> <app_name>
 ```
 
-**Generated Features:**
+### `create-serializer`
 
-- UUID primary key
-- Automatic timestamps (`created_at`, `deleted_at`)
-- Custom manager with `get_active()` and `get_by_id()` methods
-- Soft delete support
-- Automatic factory creation
-- Model tests
-
-### `create_serializer` / `create-serializer`
-
-Creates a DRF serializer.
+Creates a DRF serializer. The CLI automatically adds "Serializer" suffix.
 
 ```bash
-# Django management command
-python manage.py create_serializer <serializer_name> <app_name> [--model <model_name>]
+django-smartcli create-serializer <name> <app_name> [--model <model_name>]
 
-# Direct CLI command
-django-smartcli create-serializer <serializer_name> <app_name> [--model <model_name>]
+# Examples:
+django-smartcli create-serializer Product products     # → ProductSerializer
+django-smartcli create-serializer UserProfile users    # → UserProfileSerializer
 ```
 
-**Features:**
+### `create-service`
 
-- ModelSerializer with proper field configuration
-- Automatic model detection
-- Read-only fields for timestamps
-- Serializer tests
-
-### `create_service` / `create-service`
-
-Creates a business logic service.
+Creates a business logic service. The CLI automatically adds "Service" suffix.
 
 ```bash
-# Django management command
-python manage.py create_service <service_name> <app_name>
+django-smartcli create-service <name> <app_name>
 
-# Direct CLI command
-django-smartcli create-service <service_name> <app_name>
+# Examples:
+django-smartcli create-service Product products        # → ProductService
+django-smartcli create-service UserProfile users       # → UserProfileService
 ```
 
-**Features:**
+### `create-factory`
 
-- Class with static methods
-- Atomic transaction support
-- CRUD operation templates
-- Service tests
-
-### `create_factory` / `create-factory`
-
-Creates a factory_boy factory.
+Creates a factory_boy factory. The CLI automatically adds "Factory" suffix.
 
 ```bash
-# Django management command
-python manage.py create_factory <factory_name> <app_name>
+django-smartcli create-factory <name> <app_name>
 
-# Direct CLI command
-django-smartcli create-factory <factory_name> <app_name>
+# Examples:
+django-smartcli create-factory Product products        # → ProductFactory
+django-smartcli create-factory UserProfile users       # → UserProfileFactory
 ```
 
-**Features:**
+### `create-views`
 
-- DjangoModelFactory
-- Automatic timestamp handling
-- Model association
-
-### `create_views` / `create-views`
-
-Creates a DRF ViewSet.
+Creates a DRF ViewSet. The CLI automatically adds "ViewSet" suffix.
 
 ```bash
-# Django management command
-python manage.py create_views <view_name> <app_name> [--model <model_name>]
+django-smartcli create-views <name> <app_name> [--model <model_name>]
 
-# Direct CLI command
-django-smartcli create-views <view_name> <app_name> [--model <model_name>]
+# Examples:
+django-smartcli create-views Product products          # → ProductViewSet
+django-smartcli create-views UserProfile users         # → UserProfileViewSet
 ```
 
-**Features:**
+### `test`
 
-- Complete CRUD operations
-- Permission classes
-- Model, serializer, and service integration
-- View tests
+Runs Django tests with custom filters for organized test execution:
 
-## 🎯 CLI Interface
+```bash
+# Run all tests
+django-smartcli test
+
+# Run tests by category (only one filter at a time)
+django-smartcli test --models        # Run only model tests
+django-smartcli test --services      # Run only service tests
+django-smartcli test --serializers   # Run only serializer tests
+django-smartcli test --views         # Run only view tests
+```
+
+**Available Test Filters:**
+
+- **`--models`**: Tests in `tests/models/` directories
+- **`--services`**: Tests in `tests/services/` directories
+- **`--serializers`**: Tests in `tests/serializers/` directories
+- **`--views`**: Tests in `tests/views/` directories
+
+> **💡 Note:** You can only use one filter at a time. The command will automatically detect and run tests from the appropriate directories in your Django apps.
+
+---
+
+> **💡 Tip:** All these commands are also available with `python manage.py ...` if you prefer the classic Django syntax.
+
+---
+
+## 🎯 CLI Interface (highlighted)
 
 ### Getting Help
 
 ```bash
-# Show all available commands
 django-smartcli --help
-
-# Show version information
 django-smartcli --version
 ```
 
 ### Command Examples
 
 ```bash
-# Create a complete microservice
+# Create a complete microservice with smart naming
 django-smartcli create-module products
-
-# Create models
 django-smartcli create-model Product products
-django-smartcli create-model Category products
-
-# Create serializers
-django-smartcli create-serializer ProductSerializer products
-django-smartcli create-serializer CategorySerializer products
-
-# Create services
-django-smartcli create-service ProductService products
-django-smartcli create-service CategoryService products
-
-# Create factories
-django-smartcli create-factory ProductFactory products
-django-smartcli create-factory CategoryFactory products
-
-# Create views
-django-smartcli create-views ProductViewSet products
-django-smartcli create-views CategoryViewSet products
+django-smartcli create-serializer Product products     # → ProductSerializer
+django-smartcli create-service Product products        # → ProductService
+django-smartcli create-factory Product products        # → ProductFactory
+django-smartcli create-views Product products          # → ProductViewSet
+django-smartcli test --models
 ```
 
 ### CLI Features
 
 - **Modern Interface**: Uses kebab-case commands (e.g., `create-module` instead of `create_module`)
+- **Smart Naming**: Automatically adds appropriate suffixes to class names
 - **Error Handling**: Clear error messages and validation
 - **Django Project Detection**: Automatically detects if you're in a Django project
 - **Help System**: Built-in help and version information
@@ -255,17 +216,19 @@ django-smartcli create-views CategoryViewSet products
 
 - **Format:** PascalCase + "Serializer" (e.g., `UserProfileSerializer`)
 - **File:** snake_case + "\_serializer" (e.g., `user_profile_serializer.py`)
+- **CLI Input:** Just the base name (e.g., `UserProfile` → `UserProfileSerializer`)
 
 ### Services
 
 - **Format:** PascalCase + "Service" (e.g., `UserProfileService`)
 - **File:** snake_case + "\_service" (e.g., `user_profile_service.py`)
-- **Methods:** snake_case (e.g., `create_user_profile`)
+- **CLI Input:** Just the base name (e.g., `UserProfile` → `UserProfileService`)
 
 ### Factories
 
 - **Format:** PascalCase + "Factory" (e.g., `UserProfileFactory`)
 - **File:** snake_case + "\_factory" (e.g., `user_profile_factory.py`)
+- **CLI Input:** Just the base name (e.g., `UserProfile` → `UserProfileFactory`)
 
 ## 🧪 Testing
 
@@ -273,12 +236,20 @@ The library includes comprehensive test templates for all generated components:
 
 ```bash
 # Run all tests
+django-smartcli test
+# or
 python manage.py test
 
-# Run specific test categories
+# Run tests by category (only one filter at a time)
+django-smartcli test --models        # Model tests
+django-smartcli test --services      # Service tests
+django-smartcli test --serializers   # Serializer tests
+django-smartcli test --views         # View tests
+
+# Same with manage.py
 python manage.py test --models
-python manage.py test --serializers
 python manage.py test --services
+python manage.py test --serializers
 python manage.py test --views
 ```
 
@@ -315,11 +286,8 @@ flake8 smartcli/
 ### Testing the CLI
 
 ```bash
-# Test the CLI interface
 django-smartcli --help
 django-smartcli --version
-
-# Test in a Django project
 cd your-django-project
 django-smartcli create-module test-module
 ```
