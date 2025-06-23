@@ -110,6 +110,11 @@ def get_app_import_path(app_name: str) -> str:
 
 def pascal_to_snake_case(name: str) -> str:
     """Convert PascalCase to snake_case."""
+    # If there are already underscores, just convert to lowercase
+    if '_' in name:
+        return name.lower()
+    
+    # Convert PascalCase to snake_case
     return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
 
 

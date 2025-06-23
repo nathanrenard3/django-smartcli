@@ -256,7 +256,7 @@ python manage.py test --views
 ## 📋 Requirements
 
 - Python 3.8+
-- Django 4.2+
+- Django 4.2+ (including Django 5.2.3)
 - Django REST Framework 3.14+
 - factory_boy 3.3+
 

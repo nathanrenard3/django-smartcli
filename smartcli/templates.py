@@ -15,7 +15,6 @@ class ModelTemplates:
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import QuerySet
 from django.utils import timezone
 
 
@@ -25,24 +24,18 @@ class {model_name}Manager(models.Manager):
     Contains specific query methods for the model.
     """
 
-    def get_active(self) -> "QuerySet[{model_name}]":
+    def get_active(self):
         """
         Get all {model_name.lower()}s that are not deleted.
-
-        Returns:
-            QuerySet: A queryset of active {model_name.lower()}s
         """
         return self.filter(deleted_at__isnull=True)
 
-    def get_by_id(self, {model_name.lower()}_id: str) -> "{model_name}":
+    def get_by_id(self, {model_name.lower()}_id: str):
         """
         Get a {model_name.lower()} by its ID.
 
         Args:
             {model_name.lower()}_id: The ID of the {model_name.lower()} to get
-
-        Returns:
-            {model_name}: The {model_name.lower()} object
         """
         try:
             {model_name.lower()} = self.get(id={model_name.lower()}_id)
@@ -147,7 +140,7 @@ class {model_name}ModelTest(TestCase):
             {model_name}.objects.get_by_id("non-existent-id")
 
 
-class {model_name}ManagerTest(BaseTestCase):
+class {model_name}ManagerTest(TestCase):
     """Tests for the {model_name}Manager."""
 
     @classmethod
@@ -159,7 +152,6 @@ class {model_name}ManagerTest(BaseTestCase):
     def test_manager_get_active(self):
         """Test the get_active method returns active {model_name.lower()}s."""
         active_{model_name.lower()}s = {model_name}.objects.get_active()
-        self.assertIsInstance(active_{model_name.lower()}s, models.QuerySet)
         self.assertIn(self.{model_name.lower()}, active_{model_name.lower()}s)
 
     def test_manager_get_by_id_success(self):

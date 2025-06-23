@@ -12,7 +12,7 @@ setup(
     
     # Core dependencies
     install_requires=[
-        "Django>=4.2,<5.0",
+        "Django>=4.2,<5.3",
         "djangorestframework>=3.14.0",
         "factory-boy>=3.3.0",
     ],
@@ -61,6 +61,8 @@ setup(
         "Framework :: Django",
         "Framework :: Django :: 4.2",
         "Framework :: Django :: 5.0",
+        "Framework :: Django :: 5.1",
+        "Framework :: Django :: 5.2",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Software Development :: Code Generators",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
