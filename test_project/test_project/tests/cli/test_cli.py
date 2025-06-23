@@ -141,6 +141,6 @@ For more information, visit: https://github.com/nathanrenard3/django-smartcli
     def test_print_version(self):
         with patch("builtins.print") as mock_print:
             cli.print_version()
-            mock_print.assert_any_call("Django SmartCLI v0.1.0")
+            mock_print.assert_any_call("Django SmartCLI v0.2.0")
             mock_print.assert_any_call("A smart CLI for Django to help you create and manage microservices")
             mock_print.assert_any_call("https://github.com/nathanrenard3/django-smartcli") 
