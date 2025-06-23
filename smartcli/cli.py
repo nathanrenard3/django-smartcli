@@ -144,7 +144,7 @@ For more information, visit: https://github.com/nathanrenard3/django-smartcli
 
 def print_version() -> None:
     """Print version information."""
-    version = "0.1.0"
+    version = "0.2.0"
     print(f"Django SmartCLI v{version}")
     print("A smart CLI for Django to help you create and manage microservices")
     print("https://github.com/nathanrenard3/django-smartcli")
